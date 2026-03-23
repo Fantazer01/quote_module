@@ -50,6 +50,7 @@ class DFMResult:
 class CostBreakdown:
     material_cost: float
     cutting_cost: float
+    piercing_cost: float
     setup_cost: float
     total_cost: float
 
