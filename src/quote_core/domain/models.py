@@ -36,6 +36,8 @@ class GeometryMetrics:
     total_cut_length_mm: float
     total_area_mm2: float
     pierce_count: int
+    bounding_box_width_mm: float
+    bounding_box_height_mm: float
 
 
 @dataclass(frozen=True)
