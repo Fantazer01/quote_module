@@ -26,12 +26,6 @@ python3 -m venv .venv
 source .venv/bin/activate
 ```
 
-Обнови базовые инструменты установки:
-
-```bash
-python -m pip install --upgrade pip setuptools wheel
-```
-
 Установи проект в editable-режиме:
 
 ```bash
