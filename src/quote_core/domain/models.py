@@ -42,8 +42,8 @@ class GeometryMetrics:
 
 @dataclass(frozen=True)
 class DFMResult:
-    is_valid: bool
-    message: str | None
+    is_valid: bool = True
+    message: str | None = None
 
 
 @dataclass(frozen=True)
