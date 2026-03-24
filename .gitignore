@@ -2,4 +2,7 @@
 .venv/
 prompts/
 *.py[cod]
+__pycache__/
+*.egg-info/
+build/
 dist/
