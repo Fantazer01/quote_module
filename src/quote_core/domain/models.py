@@ -12,25 +12,6 @@ class QuoteRequest:
 
 
 @dataclass(frozen=True)
-class Point:
-    x: float
-    y: float
-
-
-@dataclass(frozen=True)
-class Segment:
-    start: Point
-    end: Point
-    length_mm: float
-
-
-@dataclass(frozen=True)
-class Contour:
-    segments: list[Segment]
-    is_closed: bool
-
-
-@dataclass(frozen=True)
 class GeometryMetrics:
     contour_count: int
     total_cut_length_mm: float
