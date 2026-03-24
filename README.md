@@ -1,4 +1,4 @@
-# Price Calculation Module
+# Qoute Module
 
 Модуль расчёта стоимости лазерной резки металла.
 
