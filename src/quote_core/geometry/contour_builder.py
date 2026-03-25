@@ -1,9 +1,13 @@
 from __future__ import annotations
 
+import logging
+
 import math
 from typing import List
 
 from quote_core.geometry.primitives import Contour, Point, Segment
+
+logger = logging.getLogger(__name__)
 
 
 def _points_close(a: Point, b: Point, eps: float) -> bool:
@@ -67,6 +71,7 @@ def build_contours(segments: list[Segment], eps: float = 1e-4) -> list[Contour]:
             growing = grow_forward() or grow_backward()
 
         is_closed = _points_close(chain[0].start, chain[-1].end, eps)
+        logger.debug("Contour №%d, length: %s", len(contours) + 1, sum(segment.length for segment in chain))
         contours.append(Contour(segments=chain, is_closed=is_closed))
 
     return contours
