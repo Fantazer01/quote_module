@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
 from pathlib import Path
 from typing import TypeAlias
 
 import ezdxf
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass(frozen=True)
@@ -93,4 +96,9 @@ def parse_dxf(file_path: Path) -> list:
                 )
             )
 
+    logger.info(
+        "Parsed DXF %s: %d supported entities",
+        file_path,
+        len(entities),
+    )
     return entities

@@ -1,10 +1,15 @@
 from __future__ import annotations
 
 import argparse
+import logging
+import sys
 from pathlib import Path
 
 from quote_core.app.calculate_quote import calculate_quote
 from quote_core.domain.models import QuoteRequest
+from quote_core.logging_config import setup_logging
+
+logger = logging.getLogger(__name__)
 
 
 def _build_cli_parser() -> argparse.ArgumentParser:
@@ -34,8 +39,12 @@ def _build_cli_parser() -> argparse.ArgumentParser:
 
 
 def main() -> None:
+    setup_logging()
+
     parser = _build_cli_parser()
     args = parser.parse_args()
+
+    logger.info("Starting quote_core (CLI)")
 
     request = QuoteRequest(
         dxf_path=str(args.dxf_file),
@@ -44,7 +53,12 @@ def main() -> None:
         quantity=args.quantity,
     )
 
-    result = calculate_quote(request)
+    try:
+        result = calculate_quote(request)
+    except Exception:
+        logger.exception("Quote calculation failed")
+        sys.exit(1)
+
     print(f"Total price: {result.costs.total_cost:.2f} RUB")
     print(
         "Breakdown:",

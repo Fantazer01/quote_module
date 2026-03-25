@@ -40,6 +40,43 @@ python -m pip install -e .
 python -m quote_core.main
 ```
 
+## Логирование
+
+Расчётная логика пишет сообщения через стандартный модуль `logging` (`getLogger(__name__)` в модулях). **Единая настройка** (уровень, формат, вывод в консоль) делается функцией `quote_core.logging_config.setup_logging()`.
+
+### Запуск из CLI
+
+При `python -m quote_core.main` логирование настраивается автоматически в начале работы программы. Уровень задаётся переменной окружения **`LOG_LEVEL`**: допустимы `DEBUG`, `INFO`, `WARNING`, `ERROR`, `CRITICAL`. Если переменная не задана, пуста или содержит неизвестное значение, используется **`INFO`** (при непустом неверном значении в лог пишется предупреждение).
+
+Пример с отладочными сообщениями:
+
+```bash
+LOG_LEVEL=DEBUG python -m quote_core.main путь/к/файлу.dxf
+```
+
+### Использование как библиотеки
+
+Если ты вызываешь, например, `calculate_quote()` из своего скрипта, сервиса или другого entrypoint **без** запуска `quote_core.main`, корневой логгер может быть **не настроен**: сообщения не попадут в тот же формат и не будут учитывать `LOG_LEVEL`, пока ты сам не вызовешь настройку один раз при старте своего приложения:
+
+```python
+from quote_core.logging_config import setup_logging
+from quote_core.app.calculate_quote import calculate_quote
+from quote_core.domain.models import QuoteRequest
+
+setup_logging()  # один раз при старте процесса / перед первым расчётом
+
+result = calculate_quote(
+    QuoteRequest(
+        dxf_path="путь/к/файлу.dxf",
+        material_code="steel_s235",
+        thickness_mm=2.0,
+        quantity=1,
+    )
+)
+```
+
+Так же работает `LOG_LEVEL` в окружении процесса, в котором вызывается `setup_logging()`.
+
 ## Сборка проекта
 
 

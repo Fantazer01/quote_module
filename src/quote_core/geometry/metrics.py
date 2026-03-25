@@ -1,6 +1,10 @@
 from __future__ import annotations
 
+import logging
+
 from quote_core.domain.models import GeometryMetrics
+
+logger = logging.getLogger(__name__)
 from quote_core.geometry.primitives import Contour
 
 
@@ -38,6 +42,12 @@ def calculate_metrics(contours: list[Contour]) -> GeometryMetrics:
     # MVP approximation: area as bounding box area.
     total_area_mm2 = bounding_box_width_mm * bounding_box_height_mm
 
+    logger.info(
+        "Computed geometry metrics: contours=%d, cut_length_mm=%.2f, pierces=%d",
+        contour_count,
+        total_cut_length_mm,
+        pierce_count,
+    )
     return GeometryMetrics(
         contour_count=contour_count,
         total_cut_length_mm=total_cut_length_mm,
