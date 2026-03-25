@@ -1,6 +1,7 @@
 .python_packages/
 .venv/
 prompts/
+examples/
 *.py[cod]
 __pycache__/
 *.egg-info/
